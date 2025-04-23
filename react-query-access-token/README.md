@@ -4,7 +4,8 @@ This repo provides an example of setting up a generic suspensible (and regular) 
 
 - 🚨 Important Notes
 - 💡 Tips or Suggestions
-- 🛠️ Implementation Detailstechnical context
+- 🛠️ Implementation Details
+- ❓ Questions or Uncertainties
 
 ## Dummy Data
 

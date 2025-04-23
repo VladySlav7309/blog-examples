@@ -10,5 +10,15 @@ export const PostsWrapper = () => {
     throw query.error;
   }
 
-  return <pre>{JSON.stringify(query.data?.[0], null, 2)}</pre>;
+  return (
+    <pre
+      style={{
+        width: "100%",
+        whiteSpace: "pre-wrap",
+        wordWrap: "break-word",
+      }}
+    >
+      {JSON.stringify(query.data?.[0], null, 2)}
+    </pre>
+  );
 };

@@ -1,7 +1,6 @@
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { ReactNode, Suspense } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import "./App.css";
 import { lazy } from "react";
 
 const PostsWrapper = lazy(() =>

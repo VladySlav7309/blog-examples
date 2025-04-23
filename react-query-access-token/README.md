@@ -1,54 +1,27 @@
-# React + TypeScript + Vite
+# Adding access token to custom hooks built using react query
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repo provides an example of setting up a generic suspensible (and regular) react query that embeds token acquisition into hook fetcher. Follow the emojis like these ones to find out key aspects of this example:
 
-Currently, two official plugins are available:
+- 🚨 Important Notes
+- 💡 Tips or Suggestions
+- 🛠️ Implementation Detailstechnical context
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Dummy Data
 
-## Expanding the ESLint configuration
+We're using [jsonplaceholder](https://jsonplaceholder.typicode.com/) api is used to render some dynamic dummy data in UI.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Testing
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Follow through the configurations and comments in the repo to learn more about setting up [vitest](https://vitest.dev/) with [mock service worker](https://mswjs.io/) and testing custom hooks like `use-posts.ts`, built on top of our generic auth query hooks.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Repo relies on [pnpm](https://pnpm.io/) as it's package manager. You should however be able to run it with npm or yarn with relative ease.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Handy commands to get started:
+
+- Start off by running `pnpm install` (or use [yarn](https://yarnpkg.com/) or [npm](https://www.npmjs.com/) or <your favourite package manager>)
+- `pnpm dev` to start the app in development mode
+- `pnpm test` to test the app
+
+Start from `App.tsx` and drill down into the component tree, hooks and tests as you see fit. Please note, this example is slightly different from the article as it's using `useSuspenseQuery` and custom `use-posts.ts` hook relies on our custom `useAuthSuspenseQuery`.

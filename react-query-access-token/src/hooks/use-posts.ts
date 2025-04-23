@@ -1,4 +1,4 @@
-import { BaseAuthQueryKey, useAuthQuery } from "./use-auth-query";
+import { BaseAuthQueryKey, useAuthSuspenseQuery } from "./use-auth-query";
 
 type Post = {
   userId: number;
@@ -14,18 +14,16 @@ const fetchPosts = async (_: unknown, token: string): Promise<Post[]> => {
     },
   });
 
+  // 💡 Remove this if to check how the UI looks when query breaks
   if (!res.ok) {
-    console.log("Error statusText: ", res.statusText);
     throw new Error("Failed to fetch posts");
   }
 
-  const r = await res.json();
-  console.log("r", r);
-  return r;
+  return res.json();
 };
 
 export const usePosts = () =>
-  useAuthQuery<BaseAuthQueryKey, Post[], Error>(
+  useAuthSuspenseQuery<BaseAuthQueryKey, Post[], Error>(
     ["posts", undefined],
     fetchPosts
   );

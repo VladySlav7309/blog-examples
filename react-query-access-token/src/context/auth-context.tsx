@@ -12,7 +12,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve("mock-access-token");
-      }, 1000);
+      });
     });
   };
 

@@ -1,5 +1,3 @@
-// src/hooks/usePosts.ts
-
 import { BaseAuthQueryKey, useAuthSuspenseQuery } from "./use-auth-query";
 
 type Post = {
@@ -10,7 +8,6 @@ type Post = {
 };
 
 const fetchPosts = async (_: unknown, token: string): Promise<Post[]> => {
-  // Simulate auth header
   const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
     headers: {
       Authorization: `Bearer ${token}`,

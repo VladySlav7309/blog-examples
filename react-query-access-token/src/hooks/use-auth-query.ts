@@ -2,6 +2,7 @@ import { useAuth } from "../context/auth-context";
 import {
   useQuery,
   UseQueryOptions,
+  useSuspenseQuery,
   UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 
@@ -10,18 +11,9 @@ export type AuthQueryOptions<
   TQueryKey extends BaseAuthQueryKey,
   TQueryFnData,
   TError,
-  TData = TQueryFnData,
+  TData = TQueryFnData
 > = Omit<
   UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-  "queryKey" | "queryFn"
->;
-export type AuthSuspenseQueryOptions<
-  TQueryKey extends BaseAuthQueryKey,
-  TQueryFnData,
-  TError,
-  TData = TQueryFnData,
-> = Omit<
-  UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
   "queryKey" | "queryFn"
 >;
 
@@ -29,7 +21,7 @@ export const useAuthQuery = <
   TQueryKey extends BaseAuthQueryKey,
   TQueryFnData,
   TError,
-  TData = TQueryFnData,
+  TData = TQueryFnData
 >(
   queryKey: TQueryKey,
   fetcher: (params: TQueryKey[1], token: string) => Promise<TQueryFnData>,
@@ -47,11 +39,21 @@ export const useAuthQuery = <
   });
 };
 
+export type AuthSuspenseQueryOptions<
+  TQueryKey extends BaseAuthQueryKey,
+  TQueryFnData,
+  TError,
+  TData = TQueryFnData
+> = Omit<
+  UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+  "queryKey" | "queryFn"
+>;
+
 export const useAuthSuspenseQuery = <
   TQueryKey extends BaseAuthQueryKey,
   TQueryFnData,
   TError,
-  TData = TQueryFnData,
+  TData = TQueryFnData
 >(
   queryKey: TQueryKey,
   fetcher: (params: TQueryKey[1], token: string) => Promise<TQueryFnData>,
@@ -59,7 +61,7 @@ export const useAuthSuspenseQuery = <
 ) => {
   const { getAccessToken } = useAuth();
 
-  return useQuery({
+  return useSuspenseQuery({
     queryKey,
     queryFn: async () => {
       const token = await getAccessToken();

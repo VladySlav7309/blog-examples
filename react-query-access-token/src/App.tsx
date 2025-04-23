@@ -21,9 +21,14 @@ const resetBoundaryFallback = ({
 export const App = () => {
   return (
     <>
+      {/* 🛠️ rendering error boundary like this inside the QueryErrorResetBoundary is quite handy,
+      since resetting the boundary will trigger all errored-out queries to reload again */}
       <QueryErrorResetBoundary>
+        {/* 🚨 wrapping our component in a error boundary to ensure that errors thrown in case
+        query fails to load are properly caught and don't break other parts of the app */}
         {({ reset }) => (
           <ErrorBoundary fallbackRender={resetBoundaryFallback} onReset={reset}>
+            {/* 💡 this suspense will catch both the loading of the component itself + the loading of the suspended queries inside the component */}
             <Suspense fallback={<div>Loading...</div>}>
               <PostsWrapper />
             </Suspense>

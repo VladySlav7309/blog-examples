@@ -10,6 +10,10 @@ export const PostsWrapper = () => {
     throw query.error;
   }
 
+  if (query.isLoading || query.isFetching) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <pre
       style={{

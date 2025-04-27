@@ -25,4 +25,4 @@ Handy commands to get started:
 - `pnpm dev` to start the app in development mode
 - `pnpm test` to test the app
 
-Start from `App.tsx` and drill down into the component tree, hooks and tests as you see fit. Please note, this example is slightly different from the article as it's using `useSuspenseQuery` and custom `use-posts.ts` hook relies on our custom `useAuthSuspenseQuery`.
+Start from `App.tsx` and drill down into the component tree, hooks and tests as you see fit.

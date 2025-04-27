@@ -3,7 +3,7 @@
   This is probably the file you came to this repo for originally. For convenience it contains both the `useAuthQuery` hook for regular queries and the
   useAuthSuspenseQuery for suspensible queries. 
 */
-import { useAuth } from "../context/auth-context";
+import { useAuth } from "@/context/auth-context";
 import {
   useQuery,
   UseQueryOptions,

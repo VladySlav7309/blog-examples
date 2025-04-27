@@ -1,4 +1,9 @@
 import {
+  QueryClient,
+  QueryClientProvider,
+  QueryErrorResetBoundary,
+} from "@tanstack/react-query";
+import {
   queries,
   Queries,
   render,
@@ -7,7 +12,6 @@ import {
   RenderHookResult,
   RenderOptions,
 } from "@testing-library/react";
-import { Container } from "react-dom/client";
 import {
   createElement,
   JSXElementConstructor,
@@ -15,12 +19,7 @@ import {
   ReactNode,
   Suspense,
 } from "react";
-import {
-  QueryClientProvider,
-  QueryErrorResetBoundary,
-} from "@tanstack/react-query";
-import { QueryClient } from "@tanstack/react-query";
-import { AuthProvider } from "./context/auth-context";
+import { Container } from "react-dom/client";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 
 export const queryClient = new QueryClient({
@@ -28,9 +27,9 @@ export const queryClient = new QueryClient({
     queries: {
       /* 🛠️ in general, when testing our hooks we do not want them to retry or refetch if stale.
       These settings can be changed easily by passing a custom query client provider as a wrapper for specific tests  */
-      staleTime: Infinity,
+      staleTime: 0,
       refetchOnWindowFocus: false,
-      retry: 0,
+      retry: false,
     },
   },
 });
@@ -56,24 +55,20 @@ const renderWrapper =
   ({ children }: PropsWithChildren) =>
     (
       <>
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <QueryErrorResetBoundary>
-              {({ reset }) => (
-                <ErrorBoundary
-                  fallbackRender={resetBoundaryFallback}
-                  onReset={reset}
-                >
-                  <Suspense fallback={<div>Loading...</div>}>
-                    {wrapper
-                      ? createElement(wrapper, null, children)
-                      : children}
-                  </Suspense>
-                </ErrorBoundary>
-              )}
-            </QueryErrorResetBoundary>
-          </QueryClientProvider>
-        </AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <QueryErrorResetBoundary>
+            {({ reset }) => (
+              <ErrorBoundary
+                fallbackRender={resetBoundaryFallback}
+                onReset={reset}
+              >
+                <Suspense fallback={<div>Loading...</div>}>
+                  {wrapper ? createElement(wrapper, null, children) : children}
+                </Suspense>
+              </ErrorBoundary>
+            )}
+          </QueryErrorResetBoundary>
+        </QueryClientProvider>
       </>
     );
 
@@ -87,8 +82,8 @@ const customRender = <
   options: RenderOptions<Q, RenderContainer, BaseElement>
 ) => {
   return render(ui, {
-    wrapper: renderWrapper(options.wrapper),
     ...options,
+    wrapper: renderWrapper(options?.wrapper),
   });
 };
 
@@ -106,8 +101,8 @@ const customRenderHook = <
     | undefined
 ): RenderHookResult<Result, Props> => {
   return renderHook(render, {
-    wrapper: renderWrapper(options?.wrapper),
     ...options,
+    wrapper: renderWrapper(options?.wrapper),
   });
 };
 
@@ -115,5 +110,4 @@ const customRenderHook = <
 export * from "@testing-library/react";
 /* 🚨 by exporting our custom functions like this we hide the original exports from testing library
 and allow everyone to use our custom implementation the same way they would use original functions */
-export { customRender as render };
-export { customRenderHook as renderHook };
+export { customRender as render, customRenderHook as renderHook };
